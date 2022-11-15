@@ -18,11 +18,13 @@ public class Main {
 		
 		driver.get("http://www.google.co.jp/");
 		WebElement element = driver.findElement(By.cssSelector("div.a4bIc > input"));
-		Thread.sleep(500);
-		element.sendKeys("CSSセレクタとは");
+		element.sendKeys("selenium");
 		Thread.sleep(500);
 		element.sendKeys(Keys.ENTER);
-		Thread.sleep(2000);
+		List<WebElement> list = driver.findElements(By.className("MjjYud"));
+		System.out.println("**リンクの一番上の文言**\n");
+		System.out.println(list.get(0).getText());
+		Thread.sleep(500);
 		driver.close();
 		
 //		複数の要素（テーブルなど）を受け取る。
