@@ -1,9 +1,10 @@
 package selenium;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -16,53 +17,67 @@ public class Main {
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();
 
-		driver.get("https://rakuplus.jp/");
-		Thread.sleep(50);
-		WebElement element = driver.findElement(By.id("user_login"));
-		element.sendKeys("kumi.shirai@rakus-partners.co.jp");
-		Thread.sleep(50);
-		element = driver.findElement(By.id("user_pass"));
-		element.sendKeys("kumi.shirai@rakus-partners.co.jp");
-		Thread.sleep(50);
-		element = driver.findElement(By.id("wp-submit"));
+		driver.get("https://www.e-procurement.metro.tokyo.lg.jp/index.jsp");
+		WebElement element = driver.findElement(By.cssSelector("body > div.noticeofurlchange > div > button"));
+		element.click();
+		element = driver.findElement(By.cssSelector("#category_menu > ul > li.cat_menu_1 > a:nth-child(1) > img"));
 		element.click();
 
-		element = driver.findElement(By.partialLinkText("2022年10月入社QAエンジニア新入社員紹介"));
+		Set<String> window = driver.getWindowHandles();
+		Iterator<String> it = window.iterator();
+		String win1 = it.next();
+		String win2 = it.next();
+		driver.switchTo().window(win2);
+		Thread.sleep(200);
+		element = driver.findElement(By.id("topMenuBtn03"));
+		element.click();
+		Thread.sleep(100);
+
+		element = driver.findElement(By.name("StartDateYY"));
+		element.sendKeys("4");
+		element = driver.findElement(By.name("StartDateMM"));
+		element.sendKeys("11");
+		element = driver.findElement(By.name("StartDateDD"));
+		element.sendKeys("15");
+		Thread.sleep(50);
+		element = driver.findElement(By.name("EndDateYY"));
+		element.sendKeys("4");
+		element = driver.findElement(By.name("EndDateMM"));
+		element.sendKeys("12");
+		element = driver.findElement(By.name("EndDateDD"));
+		element.sendKeys("14");
+		Thread.sleep(50);
+		element = driver.findElement(By.xpath("//tr[3]/td/table[2]/tbody/tr/td/a"));
 		element.click();
 
-		List<WebElement> divList = driver.findElements(By.cssSelector("section.entry-content.cf > div"));
-		System.out.println("**同期の情報**");
-		int count = 0;
-		for (WebElement elm : divList) {
-			if (count > 0) {//　関係ないdivをスキップする
-				WebElement human = elm.findElement(By.className("sgb-space-bottom"));
-				String name = human.getText();
-				System.out.print(name + " (");
-				human = elm.findElement(By.cssSelector("div.is-layout-flow.wp-block-column.is-vertically-aligned-top.visual > p"));
-				String name2 = human.getText();
-				System.out.println(name2 +")");
-				human = elm.findElement(By.tagName("img"));
-				String url = human.getAttribute("src");
-				System.out.println(url);
+//		テーブル指定先　確認用
+//		WebElement table = driver.findElement(By.cssSelector("table.list-data > tbody"));
+//		System.out.println(table.getText());
+
+		List<WebElement> tr = driver.findElements(By.cssSelector("table.list-data > tr"));
+		for (WebElement list : tr) {
+				System.out.println(list.getText());
+				
+//			List<WebElement> td = list.findElements(By.tagName("td"));
+//			
+//			int count = 0;
+//			
+//			if(count < 3) {
+//				System.out.println(td.get(count).getText() + "\t");
+//			}
+//			System.out.println(td.get(count).getAttribute("a>href"));
+//			count++;
+			
+//				String date = td.findElement(By.className("light-green")).getText();
+//				String num = td.findElement(By.cssSelector("td:nth-child(2)")).getText();
+////				body > div.contents > div > form > table.list-data > tbody > tr:nth-child(2) > td:nth-child(2)
+////				body > div.contents > div > form > table.list-data > tbody > tr:nth-child(3) > td:nth-child(2)
+//				String title = td.findElement(By.cssSelector("td:nth-child(3)")).getText();
+//				String url = td.findElement(By.cssSelector("td:nth-child(3) > a")).getAttribute("href");
+//				System.out.println(date + "\t" + num + "\t" + title + "\t" + url);
 			}
-			System.out.println("----------------------------------");
-			count ++;
-		}
-//		for(WebElement elm : list) {
-//			elm = driver.findElement(By.className("sgb-space-bottom"));
-//			System.out.println(elm.getText());
-//			elm = driver.findElement(By.cssSelector("div.is-layout-flow.wp-block-column.is-vertically-aligned-top.visual > p"));
-////			#\31  > div.is-layout-flow.wp-block-column.is-vertically-aligned-top.visual > p
-//			System.out.println(elm.getText());
-//			elm = driver.findElement(By.className("js-smartphoto"));
-//			System.out.println(elm.getText());
-//		}
 
-		Thread.sleep(500);
-		driver.close();
-
-//		複数の要素（テーブルなど）を受け取る。
-//		List<WebElement> list = driver.findElements(By.cssSelector("div.a4bIc"));
+//		driver.close();
 
 	}
 
