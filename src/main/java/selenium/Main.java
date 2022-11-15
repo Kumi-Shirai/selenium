@@ -54,30 +54,36 @@ public class Main {
 //		WebElement table = driver.findElement(By.cssSelector("table.list-data > tbody"));
 //		System.out.println(table.getText());
 
-		List<WebElement> tr = driver.findElements(By.cssSelector("table.list-data > tr"));
+		List<WebElement> tr = driver.findElements(By.cssSelector("table.list-data > tbody > tr"));
 		for (WebElement list : tr) {
-				System.out.println(list.getText());
-				
-//			List<WebElement> td = list.findElements(By.tagName("td"));
-//			
-//			int count = 0;
-//			
-//			if(count < 3) {
-//				System.out.println(td.get(count).getText() + "\t");
-//			}
-//			System.out.println(td.get(count).getAttribute("a>href"));
-//			count++;
-			
-//				String date = td.findElement(By.className("light-green")).getText();
-//				String num = td.findElement(By.cssSelector("td:nth-child(2)")).getText();
-////				body > div.contents > div > form > table.list-data > tbody > tr:nth-child(2) > td:nth-child(2)
-////				body > div.contents > div > form > table.list-data > tbody > tr:nth-child(3) > td:nth-child(2)
-//				String title = td.findElement(By.cssSelector("td:nth-child(3)")).getText();
-//				String url = td.findElement(By.cssSelector("td:nth-child(3) > a")).getAttribute("href");
-//				System.out.println(date + "\t" + num + "\t" + title + "\t" + url);
-			}
+//				System.out.println(list.getText());
 
-//		driver.close();
+			List<WebElement> td = list.findElements(By.tagName("td"));
+			for(WebElement data : td) {
+			
+			int count = 0;
+			if(count < 3) {
+				System.out.print(data.getText() + "\t");
+				count++;
+			}
+			
+			System.out.println(data.getAttribute("href"));
+			System.out.println("-----------------------------");
+			}
+			/* やりかけ 
+			 * String date = td.findElement(By.className("light-green")).getText();
+			 * String num = td.findElement(By.cssSelector("td:nth-child(2)")).getText(); 
+			 * //body > div.contents > div > form > table.list-data > tbody > tr:nth-child(2)
+			 * 		> td:nth-child(2) // body > div.contents > div > form > table.list-data >
+			 * 		tbody > tr:nth-child(3) > td:nth-child(2)
+			 * String title = td.findElement(By.cssSelector("td:nth-child(3)")).getText(); 
+			 * String url = td.findElement(By.cssSelector("td:nth-child(3) > a")).getAttribute("href");
+			 * System.out.println(date + "\t" + num + "\t" + title + "\t" + url);
+			 */
+
+		}
+
+		driver.close();
 
 	}
 
